@@ -27,12 +27,9 @@ app.use(
             "http://localhost:4000",
             "https://temp-jscop-backend-74c1d15b652d.herokuapp.com",
             "https://jscop.jiitopticachapter.com",
-            "http://143.244.136.203",
+            "http://144.126.253.251",
             "https://main--jscop6frontend.netlify.app/",
-            "https://admin-frontend-optica.onrender.com",
             "https://jscop-6-0-frontend-bc8z.onrender.com",
-            "https://main--jscop6frontend.netlify.app",
-
         ],
         credentials: true,
     })
