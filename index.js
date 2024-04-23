@@ -16,6 +16,7 @@ const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to database"));
 
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger());
 app.use(
@@ -26,13 +27,15 @@ app.use(
             "http://localhost:4000",
             "https://temp-jscop-backend-74c1d15b652d.herokuapp.com",
             "https://jscop.jiitopticachapter.com",
-            "http://143.244.136.203",
+            "http://144.126.253.251",
+            "https://main--jscop6frontend.netlify.app/",
             "https://jscop-6-0-frontend-bc8z.onrender.com",
-            "https://main--jscop6frontend.netlify.app",
         ],
         credentials: true,
     })
 );
+
+
 app.use(cookieParser(process.env.SECRET));
 app.use(bodyParser.json({ limit: "2mb" }));
 

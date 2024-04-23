@@ -49,8 +49,31 @@ module.exports.deleteUser = async (req, res) => {
 };
 
 module.exports.updateUser = async (req, res) => {
+    const { id } = req.params;
+    const { name, email, department, phone, branch } = req.body;
+    const user = await generalUsers.findByIdAndUpdate(id, {
+        name: name,
+        email: email,
+        department: department,
+        phoneNo: phone,
+        branch: branch,
+        
+    });
+    
+    if (!user) {
+        return res.status(400).json("user not found");
+    }
     res.json("user updated");
 };
+
+
+module.exports.findUserByQrId = async (req,res) => {
+    const {qrId} = req.params;
+    const userQr = await qrCode.findOne({qr_id: qrId});
+    const user = await generalUsers.findById(userQr.user);
+    res.json(user);
+}
+
 
 module.exports.searchUser = async (req, res) => {
     const { name } = req.params;

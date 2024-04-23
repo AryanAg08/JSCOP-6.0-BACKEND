@@ -55,8 +55,8 @@ const sendTicket = async (email, qr_id) => {
         },
     };
 
-    const finalqrid = `${process.env.DOMAIN}/admin/sendOTP/${qr_id}`;
-
+    const finalqrid = `${qr_id}`;
+    console.log(finalqrid);
     const qrCodeimg = await QRCode.toDataURL(finalqrid, {
         width: 400,
         margin: 2,
