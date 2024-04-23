@@ -28,7 +28,7 @@ app.use(
             "https://temp-jscop-backend-74c1d15b652d.herokuapp.com",
             "https://jscop.jiitopticachapter.com",
             "http://144.126.253.251",
-            "https://main--jscop6frontend.netlify.app/",
+            "https://main--jscop6frontend.netlify.app",
             "https://jscop-6-0-frontend-bc8z.onrender.com",
         ],
         credentials: true,
