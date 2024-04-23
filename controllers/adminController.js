@@ -68,6 +68,7 @@ module.exports.updateUser = async (req, res) => {
 
 
 module.exports.findUserByQrId = async (req,res) => {
+    console.log("hello world");
     const {qrId} = req.params;
     const userQr = await qrCode.findOne({qr_id: qrId});
     const user = await generalUsers.findById(userQr.user);
