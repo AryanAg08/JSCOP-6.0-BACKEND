@@ -32,6 +32,9 @@ router.route("/unverified").get(isAdmin, admin.unverifiedUser);
 
 router.route("/verified").get(isAdmin, admin.verifiedUser);
 
+router.route("/getUser/:qrId")
+    .get(isAdmin, catchAsync(admin.findUserByQrId));
+
 router
     .route("/sendTicket/:userid")
     .post(isAdmin, catchAsync(ticket.generateQRCode));
