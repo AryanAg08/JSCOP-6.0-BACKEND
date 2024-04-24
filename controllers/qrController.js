@@ -66,16 +66,16 @@ const sendTicket = async (email, qr_id) => {
         },
     });
     console.log("Transporter created");
-console(path.resolve(__dirname, "../controllers"));
+    
     transporter.use(
         "compile",
         hbs({
           viewEngine: {
             extName: ".handlebars",
-            partialsDir: path.resolve(__dirname, "../controllers"),
+            partialsDir: path.resolve("../controllers"),
             defaultLayout: 'email',
           },
-          viewPath: path.resolve(__dirname, "../controllers"),
+          viewPath: path.resolve("../controllers"),
           extName: ".handlebars",
         })
       );
