@@ -1,7 +1,5 @@
-
-
 const tickettemPlate = () => {
-	return `
+  return `
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,13 +70,13 @@ const tickettemPlate = () => {
             <p>Location: Venue Name, City</p>
             <p><strong>Pls Check Your Attachment</strong></p>
         </div>
+        <img src="cid:unique9@nodemailer.com" alt = "TIcket"/>
 
         <p>To access your ticket, Check your Attachment</p>
         <p>If you have any questions or issues, please contact our support team.</p>
     </div>
 </body>
 </html>`;
-
 };
 
 module.exports = tickettemPlate;

@@ -55,6 +55,7 @@ const userSchema = new schema({
         type: Boolean,
         default: false,
     },
+    
     enrollmentType: {
        type: String,
        required: function () {
