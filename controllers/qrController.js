@@ -6,6 +6,7 @@ const QRCode = require("qrcode");
 const tickettemPlate = require("../mail/templates/tickettemplate");
 const hbs = require("nodemailer-express-handlebars");
 const dotenv = require("dotenv");
+const path = require("path");
 
 dotenv.config();
 
@@ -65,15 +66,16 @@ const sendTicket = async (email, qr_id) => {
         },
     });
     console.log("Transporter created");
+console(path.resolve(__dirname, "../controllers"));
     transporter.use(
         "compile",
         hbs({
           viewEngine: {
             extName: ".handlebars",
-            partialsDir: path.resolve("./controllers"),
-            defaultLayout: false,
+            partialsDir: path.resolve(__dirname, "../controllers"),
+            defaultLayout: 'email',
           },
-          viewPath: path.resolve("./controllers"),
+          viewPath: path.resolve(__dirname, "../controllers"),
           extName: ".handlebars",
         })
       );
