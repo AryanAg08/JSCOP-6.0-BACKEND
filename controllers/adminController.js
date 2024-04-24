@@ -38,7 +38,7 @@ module.exports.adminlogout = (req, res) => {
 module.exports.getAllUsers = async (req, res) => {
     console.log("hello world");
     const users = await generalUsers.find({});
-    console.log(users);
+    // console.log(users);
     res.json(users);
 };
 

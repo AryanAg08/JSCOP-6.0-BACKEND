@@ -51,26 +51,16 @@ module.exports.sendQrCodeThroughEmail = async (req, res) => {
 
 const sendTicket = async (email, qr_id) => {
     console.log("Inside Send Ticket");
-    let config = {
+
+    
+
+    let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
             user: `${process.env.EMAIL}`,
             pass: `${process.env.PASSWORD}`,
         },
-    };
-
-    const finalqrid = `${qr_id}`;
-    // console.log(finalqrid);
-    const qrCodeimg = await QRCode.toDataURL(finalqrid, {
-        width: 400,
-        margin: 2,
-        color: {
-            dark: "#335383FF",
-            light: "#EEEEEEFF",
-        },
     });
-
-    let transporter = nodemailer.createTransport(config);
     transporter.use(
         "compile",
         hbs({
@@ -83,6 +73,17 @@ const sendTicket = async (email, qr_id) => {
           extName: ".handlebars",
         })
       );
+
+      const finalqrid = `${qr_id}`;
+    // console.log(finalqrid);
+    const qrCodeimg = await QRCode.toDataURL(finalqrid, {
+        width: 400,
+        margin: 2,
+        color: {
+            dark: "#335383FF",
+            light: "#EEEEEEFF",
+        },
+    });
 
     const mailOptions = {
         from: `${process.env.EMAIL}`,
@@ -123,11 +124,13 @@ const sendTicket = async (email, qr_id) => {
             },
           ],
         };
-
-    await transporter
-        .sendMail(mailOptions)
-        .then(() => console.log("email sent"))
-        .catch((err) => console.log(err));
+        try {
+            console.log("Sending Mail" );
+            await transporter.sendMail(mailOptions);
+            console.log("Mail sent ");
+          } catch (err) {
+            console.log("Error after transporter", err);
+          }
 };
 
 // //frontend getting ticket
