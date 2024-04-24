@@ -71,10 +71,10 @@ const sendTicket = async (email, qr_id) => {
         hbs({
           viewEngine: {
             extName: ".handlebars",
-            partialsDir: path.resolve("./template"),
+            partialsDir: "./template",
             defaultLayout: false,
           },
-          viewPath: path.resolve("./template"),
+          viewPath: "./template",
           extName: ".handlebars",
         })
       );
