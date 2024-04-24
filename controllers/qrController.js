@@ -66,7 +66,7 @@ const sendTicket = async (email, qr_id) => {
         },
     });
     console.log("Transporter created");
-
+    console.log(path.resolve("controllers/"), "Path");
     transporter.use(
         "compile",
         hbs({
