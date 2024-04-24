@@ -5,10 +5,10 @@ const { isAdmin } = require('../middleware.js');
 
 
 router.route('/')
-    .post(isAdmin, catchAsync(mailSender.sendMail));
+    .post(isAdmin, catchAsync(mailSender.sendSpecificMail));
 
-router.route('/scheduleMail')
-    .post(isAdmin, catchAsync(mailSender.scheduleMail));
+// router.route('/scheduleMail')
+//     .post(isAdmin, catchAsync(mailSender.scheduleMail));
 
 
 module.exports = router;
