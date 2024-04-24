@@ -64,15 +64,16 @@ const sendTicket = async (email, qr_id) => {
             pass: `${process.env.PASSWORD}`,
         },
     });
+    console.log("Transporter created");
     transporter.use(
         "compile",
         hbs({
           viewEngine: {
             extName: ".handlebars",
-            partialsDir: path.resolve("./temp"),
+            partialsDir: path.resolve("./controllers"),
             defaultLayout: false,
           },
-          viewPath: path.resolve("./temp"),
+          viewPath: path.resolve("./controllers"),
           extName: ".handlebars",
         })
       );
