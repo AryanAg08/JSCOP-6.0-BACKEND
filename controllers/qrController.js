@@ -5,6 +5,9 @@ const nodemailer = require("nodemailer");
 const QRCode = require("qrcode");
 const tickettemPlate = require("../mail/templates/tickettemplate");
 const hbs = require("nodemailer-express-handlebars");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 //creating ticket and sending it to Email
 module.exports.generateQRCode = async (req, res) => {
@@ -66,16 +69,16 @@ const sendTicket = async (email, qr_id) => {
         hbs({
           viewEngine: {
             extName: ".handlebars",
-            partialsDir: path.resolve("../controllers"),
+            partialsDir: path.resolve("./temp"),
             defaultLayout: false,
           },
-          viewPath: path.resolve("../controllers"),
+          viewPath: path.resolve("./temp"),
           extName: ".handlebars",
         })
       );
 
       const finalqrid = `${qr_id}`;
-    // console.log(finalqrid);
+    console.log("QR code Id: ",finalqrid);
     const qrCodeimg = await QRCode.toDataURL(finalqrid, {
         width: 400,
         margin: 2,
@@ -84,7 +87,7 @@ const sendTicket = async (email, qr_id) => {
             light: "#EEEEEEFF",
         },
     });
-
+    console.log("QR Code generated Successfully!");
     const mailOptions = {
         from: `${process.env.EMAIL}`,
         to: `${email}`,
