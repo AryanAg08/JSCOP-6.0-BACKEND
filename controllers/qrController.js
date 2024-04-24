@@ -73,7 +73,7 @@ const sendTicket = async (email, qr_id) => {
           viewEngine: {
             extname: ".handlebars",
             partialsDir: path.resolve("./template"),
-            defaultLayout: 'ticket',
+            defaultLayout: 'email',
           },
           viewPath: path.resolve("./template"),
           extName: ".handlebars",
