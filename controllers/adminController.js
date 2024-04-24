@@ -122,44 +122,28 @@ module.exports.validateTicket = async (req, res) => {
     const ticketFound = await qrCode.findOne({ qr_id: ticketid });
 
     if (!ticketFound) {
-        return res.status(400).json({
-            success: false,
-            message: "Invalid Ticket ID",
-        });
+        return res.status(400).json("Invalid Ticket ID");
     }
 
     if (ticketFound.redeemed_count >= 1) {
-        return res.status(400).json({
-            success: false,
-            message: "Ticket already redeemed",
-        });
+        return res.status(400).json("Ticket already redeemed");
     }
-
-    if (Date.now() - ticketFound.reedeemed_timestamp < 18 * 60 * 60 * 1000) {
-        return res.status(400).json({
-            success: false,
-            message: "Ticket cannot be redeemed before 18 hours",
-        });
-    }
-
+      
     const user = await ticketFound.populate("user");
 
     if (!user) {
-        return res.status(400).json({
-            success: false,
-            message: "User not found",
-        });
+        return res.status(400).json("User not found");
     }
 
     const email = user.user.email;
 
     const qrCodeUser = await qrCode.findOne({ user: user.user._id });
     if (!qrCodeUser) {
-        return res.status(400).send("User does not have a QR Code");
+        return res.status(400).json("User does not have a QR Code");
     }
 
     if (qrCodeUser.redeemed_count >= 1) {
-        return res.status(400).send("Ticket already redeemed");
+        return res.status(401).json("Ticket already redeemed");
     }
 
     qrCodeUser.redeemed_count += 1;

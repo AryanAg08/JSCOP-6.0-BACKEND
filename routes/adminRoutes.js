@@ -45,6 +45,6 @@ router
 
 router
     .route("/verifyTicket/:ticketid")
-    .post(catchAsync(isAdmin), catchAsync(admin.validateTicket));
+    .post(checkUser, catchAsync(admin.validateTicket));
 
 module.exports = router;
