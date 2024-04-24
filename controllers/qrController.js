@@ -8,6 +8,7 @@ const hbs = require("nodemailer-express-handlebars");
 
 //creating ticket and sending it to Email
 module.exports.generateQRCode = async (req, res) => {
+    console.log("Inside Generate QR Code sending ticket")
     const { userid } = req.params;
     const user = await User.findById(userid);
     const { name, email } = user;
@@ -36,6 +37,7 @@ module.exports.generateQRCode = async (req, res) => {
 };
 
 module.exports.sendQrCodeThroughEmail = async (req, res) => {
+    console.log("Inside Send Ticket After verification")
     const { userid } = req.params;
     const user = await User.findById(userid);
     const { email } = user;
@@ -48,6 +50,7 @@ module.exports.sendQrCodeThroughEmail = async (req, res) => {
 };
 
 const sendTicket = async (email, qr_id) => {
+    console.log("Inside Send Ticket");
     let config = {
         service: "gmail",
         auth: {
@@ -57,7 +60,7 @@ const sendTicket = async (email, qr_id) => {
     };
 
     const finalqrid = `${qr_id}`;
-    console.log(finalqrid);
+    // console.log(finalqrid);
     const qrCodeimg = await QRCode.toDataURL(finalqrid, {
         width: 400,
         margin: 2,
@@ -121,7 +124,7 @@ const sendTicket = async (email, qr_id) => {
           ],
         };
 
-    transporter
+    await transporter
         .sendMail(mailOptions)
         .then(() => console.log("email sent"))
         .catch((err) => console.log(err));
