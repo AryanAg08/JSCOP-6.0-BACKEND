@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 const nodemailer = require("nodemailer");
 const QRCode = require("qrcode");
 const tickettemPlate = require("../mail/templates/tickettemplate");
+const hbs = require("nodemailer-express-handlebars");
 
 //creating ticket and sending it to Email
 module.exports.generateQRCode = async (req, res) => {
@@ -67,19 +68,58 @@ const sendTicket = async (email, qr_id) => {
     });
 
     let transporter = nodemailer.createTransport(config);
+    transporter.use(
+        "compile",
+        hbs({
+          viewEngine: {
+            extName: ".handlebars",
+            partialsDir: path.resolve("../controllers"),
+            defaultLayout: false,
+          },
+          viewPath: path.resolve("../controllers"),
+          extName: ".handlebars",
+        })
+      );
+
     const mailOptions = {
         from: `${process.env.EMAIL}`,
         to: `${email}`,
-        subject: "Your Ticket For the event is here", // subject
-        html: tickettemPlate(),
-        attachments: [
+        subject: "JSCOP 6.0 Event Ticket", // subject
+        template:"email",
+        context: {
+            title: "Event Confirmation",
+            message: "Hello",
+            imageUrl: "cid:unique@nodemailer.com",
+          },
+          attachments: [
             {
-                filename: "ticket.png",
-                content: qrCodeimg.split("base64,")[1],
-                encoding: "base64",
+              filename: "optica.png",
+              path: "./Public/optica.jpg",
+              cid: "unique@nodemailer.com",
             },
-        ],
-    };
+            {
+              filename: "linkedin.png",
+              path: "./Public/linkedin.png",
+              cid: "unique2@nodemailer.com",
+            },
+            {
+              filename: "insta.png",
+              path: "./Public/insta.png",
+              cid: "unique3@nodemailer.com",
+            },
+            {
+              filename: "facebook.png",
+              path: "./Public/facebook.png",
+              cid: "unique4@nodemailer.com",
+            },
+            {
+              filename: "ticket.png",
+              content: qrCodeimg.split("base64,")[1],
+              encoding: "base64",
+              cid: "unique9@nodemailer.com",
+            },
+          ],
+        };
 
     transporter
         .sendMail(mailOptions)
