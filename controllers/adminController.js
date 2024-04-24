@@ -17,7 +17,13 @@ module.exports.adminlogin = async (req, res) => {
             const token = jwt.sign({ id: user._id }, `${process.env.SECRET}`, {
                 expiresIn: "5h",
             });
-            res.cookie("jwt", token, { signed: true, maxAge: 1000 * 60 * 60 });
+            res.cookie("jwt", token, { 
+                signed: true, 
+                maxAge: 1000 * 60 * 60,
+                secure:true,
+                sameSite:'none',
+                httpOnly: true,
+            });
             res.status(200).json({ ...user.toObject(), jwt: token });
         } else {
             res.status(400).json("login failed");
