@@ -17,7 +17,7 @@ module.exports.volunteerLogin = async (req, res) => {
         console.log(volunteer)
         if(volunteer && password === volunteer.password) {
             const token = jwt.sign({ email: volunteer.email }, `${process.env.VOLSECRET}`, { expiresIn: '5h' });
-            res.cookie('jwt', token, { signed: true, maxAge: 1000 * 60 * 60 });
+            res.cookie('voljwt', token, { signed: true, maxAge: 1000 * 60 * 60 });
             res.status(200).json(volunteer);
         }
 

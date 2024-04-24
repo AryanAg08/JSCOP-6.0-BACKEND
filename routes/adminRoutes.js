@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const catchAsync = require("../utils/CatchAsync");
 const admin = require("../controllers/adminController.js");
-const { isAdmin } = require("../middleware.js");
+const { isAdmin, checkUser, isVolunteer } = require("../middleware.js");
 const ticket = require("../controllers/qrController.js");
 
 router.route("/login").post(catchAsync(admin.adminlogin));
@@ -14,37 +14,37 @@ router
 
 router
     .route("/user/:id")
-    .get(isAdmin, catchAsync(admin.getUser))
-    .delete(isAdmin, catchAsync(admin.deleteUser))
-    .put(isAdmin, catchAsync(admin.updateUser));
+    .get(catchAsync(isAdmin), catchAsync(admin.getUser))
+    .delete(catchAsync(isAdmin), catchAsync(admin.deleteUser))
+    .put(catchAsync(isAdmin), catchAsync(admin.updateUser));
 
 // (same delete as above)
 // router.route('/delete/:id')
 //     .delete(isAdmin, catchAsync(admin.deleteUser));
 
-router.route("/search/:name").get(isAdmin, catchAsync(admin.searchUser));
+router.route("/search/:name").get(catchAsync(isAdmin), catchAsync(admin.searchUser));
 //this is by name only further we can do by email or enrollment number
 
 //to verify the users
-router.route("/verify/:userid").get(isAdmin, catchAsync(admin.verifyUser));
+router.route("/verify/:userid").get(catchAsync(isAdmin), catchAsync(admin.verifyUser));
 
-router.route("/unverified").get(isAdmin, admin.unverifiedUser);
+router.route("/unverified").get(catchAsync(isAdmin), admin.unverifiedUser);
 
-router.route("/verified").get(isAdmin, admin.verifiedUser);
+router.route("/verified").get(catchAsync(isAdmin), admin.verifiedUser);
 
 router.route("/getUser/:qrId")
-    .get(isAdmin, catchAsync(admin.findUserByQrId));
+    .get(checkUser, catchAsync(admin.findUserByQrId));
 
 router
     .route("/sendTicket/:userid")
-    .post(isAdmin, catchAsync(ticket.generateQRCode));
+    .post(catchAsync(isAdmin), catchAsync(ticket.generateQRCode));
 
 router
     .route("/sendTicketafterVerification/:userid")
-    .post(isAdmin, catchAsync(ticket.sendQrCodeThroughEmail));
+    .post(catchAsync(isAdmin), catchAsync(ticket.sendQrCodeThroughEmail));
 
 router
     .route("/verifyTicket/:ticketid")
-    .post(isAdmin, catchAsync(admin.validateTicket));
+    .post(catchAsync(isAdmin), catchAsync(admin.validateTicket));
 
 module.exports = router;
