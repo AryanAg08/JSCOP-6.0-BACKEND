@@ -56,13 +56,14 @@ module.exports.deleteUser = async (req, res) => {
 
 module.exports.updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, email, department, phone, branch } = req.body;
+    const { name, email, department, phone, batch, enrollment } = req.body;
     const user = await generalUsers.findByIdAndUpdate(id, {
         name: name,
         email: email,
         department: department,
         phoneNo: phone,
-        branch: branch,
+        batch: batch,
+        enrollmentNo: enrollment
         
     });
     

@@ -16,7 +16,7 @@ router
     .route("/user/:id")
     .get(catchAsync(isAdmin), catchAsync(admin.getUser))
     .delete(catchAsync(isAdmin), catchAsync(admin.deleteUser))
-    .put(catchAsync(isAdmin), catchAsync(admin.updateUser));
+    .put(catchAsync(isAdmin), admin.updateUser);
 
 // (same delete as above)
 // router.route('/delete/:id')
